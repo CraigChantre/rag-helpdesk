@@ -1,11 +1,12 @@
 from pathlib import Path
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 
+from app.api.schemas import QueryRequest, QueryResponse, RetrievedDocument
 from app.retrieval.loader import load_documents
 from app.retrieval.retriever import TfidfRetriever
-
+from app.generation.llm_client import LLMClient
+from app.services.rag_pipeline import RAGPipeline
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data" / "raw"
@@ -14,11 +15,8 @@ docs = load_documents(str(DATA_DIR))
 retriever = TfidfRetriever(docs)
 
 app = FastAPI(title="RAG Helpdesk API")
-
-
-class QueryRequest(BaseModel):
-    query: str
-
+llm_client = LLMClient()
+pipeline = RAGPipeline(retriever, llm_client)
 
 @app.get("/health")
 def health() -> dict:
@@ -29,9 +27,6 @@ def health() -> dict:
 
 
 @app.post("/query")
-def query_docs(request: QueryRequest) -> dict:
-    results = retriever.search(request.query, top_k=3)
-    return {
-        "query": request.query,
-        "results": results,
-    }
+def query_docs(request: QueryRequest):
+    response = pipeline.run(request.query)
+    return response
