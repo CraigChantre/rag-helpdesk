@@ -1,0 +1,11 @@
+Title: VPN Troubleshooting
+
+If your VPN is not connecting, follow these steps:
+
+1. Check that your internet connection is working.
+2. Verify your username and password are correct.
+3. Restart the VPN client.
+4. Try connecting to a different VPN server.
+5. Disable any firewall or antivirus temporarily to test.
+
+If the issue persists, reinstall the VPN client or contact IT support.

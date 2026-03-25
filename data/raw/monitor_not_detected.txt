@@ -1,0 +1,11 @@
+Title: Monitor Not Detected
+
+If your external monitor is not detected:
+
+1. Check that the monitor is powered on.
+2. Verify all cables are securely connected.
+3. Try a different HDMI or DisplayPort cable.
+4. Restart your computer.
+5. Go to display settings and click "Detect Displays".
+
+If the monitor is still not recognized, update your graphics drivers or contact IT support.

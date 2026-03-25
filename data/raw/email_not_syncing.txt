@@ -1,0 +1,11 @@
+Title: Email Not Syncing
+
+If your email is not syncing, follow these steps:
+
+1. Check your internet connection.
+2. Refresh your email client.
+3. Log out and log back in.
+4. Ensure your mailbox is not full.
+5. Check account settings for correct server configuration.
+
+If the problem continues, remove and re-add your email account.

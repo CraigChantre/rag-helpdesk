@@ -1,0 +1,11 @@
+Title: Printer Not Working
+
+If the printer is not working, try the following:
+
+1. Ensure the printer is powered on.
+2. Check that it is connected to the network.
+3. Restart the printer.
+4. Restart your computer.
+5. Make sure the correct printer is selected.
+
+If printing still fails, reinstall the printer drivers or contact IT support.
