@@ -1,37 +1,37 @@
+from pathlib import Path
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
 from app.retrieval.loader import load_documents
 from app.retrieval.retriever import TfidfRetriever
 
 
-def main() -> None:
-    docs = load_documents("data/raw")
-    retriever = TfidfRetriever(docs)
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data" / "raw"
 
-    print("Loaded documents:")
-    for doc in docs:
-        print(f"- {doc.title}")
+docs = load_documents(str(DATA_DIR))
+retriever = TfidfRetriever(docs)
 
-    print("\nType a query, or type 'exit' to quit.\n")
-
-    while True:
-        query = input("Query: ").strip()
-
-        if query.lower() == "exit":
-            print("Goodbye.")
-            break
-
-        results = retriever.search(query, top_k=3)
-
-        if not results:
-            print("No results found.\n")
-            continue
-
-        print("\nTop results:")
-        for i, result in enumerate(results, start=1):
-            print(f"\n{i}. {result['title']} (score={result['score']:.4f})")
-            print(result["content"][:250], "..." if len(result["content"]) > 250 else "")
-
-        print()
+app = FastAPI(title="RAG Helpdesk API")
 
 
-if __name__ == "__main__":
-    main()
+class QueryRequest(BaseModel):
+    query: str
+
+
+@app.get("/health")
+def health() -> dict:
+    return {
+        "status": "ok",
+        "documents_loaded": len(docs),
+    }
+
+
+@app.post("/query")
+def query_docs(request: QueryRequest) -> dict:
+    results = retriever.search(request.query, top_k=3)
+    return {
+        "query": request.query,
+        "results": results,
+    }
