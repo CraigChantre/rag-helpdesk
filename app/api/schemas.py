@@ -14,4 +14,6 @@ class RetrievedDocument(BaseModel):
 
 class QueryResponse(BaseModel):
     query: str
+    answer: str
+    sources: list[str]
     results: list[RetrievedDocument]

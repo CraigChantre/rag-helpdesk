@@ -2,8 +2,14 @@ def build_helpdesk_prompt(query: str, context: str) -> str:
     return f"""
 You are an IT helpdesk assistant.
 
-Use only the provided context to answer the user's question.
-If the answer is not in the context, say you are not sure.
+Answer the user's question using only the provided context.
+
+Rules:
+- Only use information explicitly stated in the context
+- Do not add examples, product names, or extra explanations
+- Do not ask follow-up questions
+- Keep the answer concise and step-by-step
+- If the answer is not in the context, say: "I’m not sure based on the available documentation."
 
 User question:
 {query}
@@ -11,5 +17,5 @@ User question:
 Context:
 {context}
 
-Answer:
+Provide a direct answer as a numbered list when appropriate.
 """.strip()
